@@ -28,8 +28,8 @@
     </div>
     <div id="videoList" align="center"  style= "margin-left: 75px; float:left;width: 1000px;height: 400px; background: #9fcdff;">
         <div class="left"><img src="../static/img/123.jpg">
-            <label>播放</label>
-            <label>設置</label>
+            <input type="button" value="播放"/>
+            <input type="button" value="設置"/>
         </div>
         <div class="center"></div>
         <div class="right" ></div>
@@ -63,11 +63,11 @@
                     var videoList=$("#videoList");
                     for (var key in data) {
                         if (key%3==0){
-                            videoList.append("<div class='left mt'></div>")
+                            videoList.append("<div class='left mt'><img src='/img/123.jpg'></div>").append("<input type='button' value='播放'/> <input type=button value=設置/>")
                         }else if (key%3==1) {
-                            videoList.append("<div class='center mt'></div>")
+                            videoList.append("<div class='center mt'><img src='/img/123.jpg'></div>")
                         }else {
-                            videoList.append("<div class='right mt'></div>").append("<br>")
+                            videoList.append("<div class='right mt'><img src='/img/123.jpg'></div>").append("<br>")
                         }
                     }
                 }
