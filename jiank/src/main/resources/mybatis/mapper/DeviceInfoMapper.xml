@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.x.jk.mybatis.mapper.DeviceMapper">
+
+    <resultMap id="DeviceInfo" type="com.x.jk.po.entity.DeviceInfo">
+        <id property="id" column="id" />
+        <result property="devName" column="dev_name"/>
+        <result property="channleNum" column="channle_Num"/>
+        <result property="devNum" column="dev_Num"/>
+        <result property="schoolID" column="schoolId"/>
+        <result property="state" column="state"/>
+        <result property="url" column="url"/>
+    </resultMap>
+
+    <select id="getAllBySchoolId" resultMap="DeviceInfo">
+        select * from deviceinfo where id=#{id}
+    </select>
+
+    <!--<delete id="deleteById" parameterType="java.lang.Integer">-->
+        <!--delete from department where id = #{id}-->
+    <!--</delete>-->
+</mapper>
