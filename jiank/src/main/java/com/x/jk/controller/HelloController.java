@@ -16,7 +16,7 @@ public class HelloController {
     @GetMapping("/index")
     public String helloworld(Map<String,Object> map) {
         map.put("msg", "Hello Freemarker");
-        return "hello";
+        return "index";
     }
     @RequestMapping("/getUser")
     public Result showUser(){
