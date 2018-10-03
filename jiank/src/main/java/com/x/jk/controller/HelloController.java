@@ -20,8 +20,6 @@ public class HelloController {
     }
     @RequestMapping("/getUser")
     public Result showUser(){
-
-
         return  Result.bulid(userService.findAll());
     }
 }

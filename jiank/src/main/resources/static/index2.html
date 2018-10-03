@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link href="/css/bootstrap.min.css">
-    <script type="text/javascript" src="../static/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
     <script src="https://open.ys7.com/sdk/js/1.4/ezuikit.js"></script>
-    <script type="text/javascript" src="../static/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
     <style type="text/css">
         .left{
             margin-left:20px;margin-right:10px;background: #71dd8a;width: 300px;height: 300px;float: left
@@ -41,6 +41,9 @@
 </body>
 
 <script type="text/javascript">
+    (function () {
+        console.info(123456)
+    })()
     $(function () {
         $.ajax({
             url:"res/School/getAll",
