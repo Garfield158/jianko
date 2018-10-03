@@ -9,11 +9,6 @@
         <result property="password" column="password"/>
     </resultMap>
 
-
-
-
-
-
     <select id="getAllUser" resultMap="UserInfo">
         select * from userinfo
     </select>
