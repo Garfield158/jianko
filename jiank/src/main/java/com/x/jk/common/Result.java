@@ -2,7 +2,7 @@ package com.x.jk.common;
 
 
 public class Result {
-    private int code;
+    private int code=200;
     private String msg;
     private Object data;
 
