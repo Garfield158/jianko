@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="getAllBySchoolId" resultMap="DeviceInfo">
-        select * from deviceinfo where id=#{id}
+        select * from deviceinfo where schoolId=#{id}
     </select>
 
     <!--<delete id="deleteById" parameterType="java.lang.Integer">-->
