@@ -12,8 +12,8 @@
     <select id="getToken" resultMap="token">
         select * from accesstoken
     </select>
-    <update id="updateToken" parameterType="java.lang.Long">
-        update accesstoken set token_rs =#{token_rs}
+    <update id="updateToken" parameterType="com.x.jk.po.entity.Token">
+        update accesstoken set token_rs =#{token_rs},expireTime =#{expireTime}
     </update>
 
 </mapper>

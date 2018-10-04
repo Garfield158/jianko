@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TokenMapper {
     Token getToken();
-    void updateToken(String token_rs);
+    void updateToken(Token token);
 }
