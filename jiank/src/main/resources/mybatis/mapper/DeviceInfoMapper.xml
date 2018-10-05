@@ -21,4 +21,7 @@
     <!--<delete id="deleteById" parameterType="java.lang.Integer">-->
         <!--delete from department where id = #{id}-->
     <!--</delete>-->
+    <select id="getDeviceById" resultMap="DeviceInfo">
+        select * from deviceinfo where id=#{id}
+    </select>
 </mapper>

@@ -22,4 +22,9 @@ public class DeviceServiceImpl implements DeviceService {
         }
         return infos.subList(firstIndex, lastIndex);
     }
+
+    @Override
+    public DeviceInfo getDeviceById(Integer id) {
+        return deviceMapper.getDeviceById(id);
+    }
 }

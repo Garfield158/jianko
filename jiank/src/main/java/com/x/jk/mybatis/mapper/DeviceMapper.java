@@ -10,4 +10,6 @@ import java.util.List;
 @Mapper
 public interface DeviceMapper {
     List<DeviceInfo> getAllBySchoolId(int id);
+
+    DeviceInfo getDeviceById(Integer id);
 }
