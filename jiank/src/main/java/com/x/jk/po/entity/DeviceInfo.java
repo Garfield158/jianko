@@ -4,10 +4,19 @@ public class DeviceInfo {
     private int id;
     private String devName;
     private int channleNum;
-    private int devNum;
+    private String  devNum;
     private int schoolID;
     private int state;
     private String url;
+    private String imgUrl;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
     public String getUrl() {
         return url;
@@ -41,11 +50,11 @@ public class DeviceInfo {
         this.channleNum = channleNum;
     }
 
-    public int getDevNum() {
+    public String getDevNum() {
         return devNum;
     }
 
-    public void setDevNum(int devNum) {
+    public void setDevNum(String devNum) {
         this.devNum = devNum;
     }
 
