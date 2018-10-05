@@ -1,19 +1,15 @@
 package com.x.jk.service.impl;
 
 
-
 import com.alibaba.fastjson.JSONObject;
 import com.x.jk.HttpClientUtil;
 import com.x.jk.mybatis.mapper.TokenMapper;
 import com.x.jk.po.entity.Token;
 import com.x.jk.service.GetToken2Local;
-import freemarker.template.SimpleDate;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
