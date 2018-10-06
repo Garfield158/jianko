@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="/css/bootstrap.min.css">
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script src="https://open.ys7.com/sdk/js/1.4/ezuikit.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+    <script src="https://open.ys7.com/sdk/js/1.3/ezuikit.js"></script>
+
+    <style type="text/css">
+        .left{
+            margin-left:20px;margin-right:10px;background: #71dd8a;width: 300px;height: 300px;float: left
+        }
+        .center{
+            margin-right:20px;margin-left: 20px; background: #71dd8a;width: 300px;height: 300px;float: left
+        }
+        .right{
+            margin-left:10px;background: #71dd8a;width: 300px;height: 300px;float: left
+        }
+        .mt{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-lg-center" align="center">监控系统22</h2>
+    <div id="schoolList"  style="float: left;margin-left: 20px;margin-top: 20px">
+    </div>
+    <div id="videoList" align="center"  style= "margin-left: 75px; float:left;width: 1200px;height: 400px;border: #1b1e21">
+        <!--<video id="myPlayer" poster="" controls playsInline webkit-playsinline autoplay>-->
+            <!--<source src="rtmp://rtmp.open.ys7.com/openlive/f01018a141094b7fa138b9d0b856507b" type="" />-->
+        <!--</video>-->
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url:"res/School/getAll",
+            method:"post",
+            success:function (data) {
+                var da=data.data;
+                var schoolList=$("#schoolList");
+                for (var key in da) {
+                    var val=da[key].schoolName;
+                    var id=da[key].id;
+                    schoolList.append("<input onclick='getDevice("+id+")' type='button' class='btn-info' value="+val+">").append("</br>")
+                }
+            }
+        })
+    });
+    function getDevice(id) {
+        $.ajax({
+                url:"res/dev/getDev",
+                method:"post",
+                data:"id="+id,
+                success:function (msg) {
+                    var data=msg.data;
+                    var html="";
+                    for (var key in data) {
+                        var ids=data[key].id;
+                        var url = data[key].url;
+                        var imgUrl=data[key].imgUrl;
+                        if (key%3==0){
+                            html+="<div class='mt left'><video id='"+ids+"v' poster='"+imgUrl+"' controls playsInline webkit-playsinline autoplay>" +
+                                "<source src='"+url+"'></video>" +
+                                " <div id=\"toolArea\">\n" +
+                                "        <input  type='button' value='上' onclick='changeDevice("+ids+",0);'/>\n" +
+                                "        <input  type='button' value='下' onclick='changeDevice("+ids+",1);'/>\n" +
+                                "        <input  type='button' value='停止' onclick='stopDevice("+ids+");'/>\n" +
+                                "        <input  type='button' value='左' onclick='changeDevice("+ids+",2);'/>\n" +
+                                "        <input  type='button' value='右' onclick='changeDevice("+ids+",3);'/>\n" +
+                                "    </div>" +
+                                "</div>";
+                        }else if (key%3==1) {
+                            html+="<div class='center mt'><video id='"+ids+"v' poster='"+imgUrl+"' controls playsInline webkit-playsinline autoplay>" +
+                                "<source src='"+url+"'> </video>" +
+                                "<div id=\"toolArea\">\n" +
+                                "        <input  type=\"button\" value=\"上\" onclick='changeDevice("+ids+",0);'/>\n" +
+                                "        <input  type=\"button\" value=\"下\" onclick='changeDevice("+ids+",1);'/>\n" +
+                                "        <input  type='button' value='停止' onclick='stopDevice("+ids+");'/>\n" +
+                                "        <input  type=\"button\" value=\"左\" onclick='changeDevice("+ids+",2);'/>\n" +
+                                "        <input  type=\"button\" value=\"右\" onclick='changeDevice("+ids+",3);'/>\n" +
+                                "    </div></div>"
+                        }else {
+                            html+="<div class='right mt'><video id='"+ids+"v' poster='"+imgUrl+"' controls playsInline webkit-playsinline autoplay>" +
+                                "<source src='"+url+"'></video> " +
+                                "<div id=\"toolArea\">\n" +
+                                "        <input  type=\"button\" value=\"上\" onclick='changeDevice("+ids+",0);'/>\n" +
+                                "        <input  type=\"button\" value=\"下\" onclick='changeDevice("+ids+",1);'/>\n" +
+                                "        <input  type='button' value='停止' onclick='stopDevice("+ids+");'/>\n" +
+                                "        <input  type=\"button\" value=\"左\" onclick='changeDevice("+ids+",2);'/>\n" +
+                                "        <input  type=\"button\" value=\"右\" onclick='changeDevice("+ids+",3);'/>\n" +
+                                "    </div></div><br>"
+                        }
+                        document.getElementById("videoList").innerHTML=html;
+                    }
+                    for (var key in data) {
+                        var ids=data[key].id;
+                        var str=ids+"v";
+                        newPlater(str);
+                    }
+                }
+            });
+    }
+
+    function changeDevice(id,direction){
+        $.ajax({
+            url:"res/dev/controlOne",
+            method:"post",
+            data:"id="+id+"&direction="+direction,
+        success:function (data) {
+                debugger;
+                if(data.code == "200"){
+                    var json = eval('('+data.data+')');
+                    if("200"!=json.code){
+                        alert(json.msg);
+                    }
+                }else{
+                    alert("设备错误");
+                }
+            }
+        });
+    }
+    function stopDevice(id){
+        $.ajax({
+            url:"res/dev/stopDevice",
+            method:"post",
+            data:"id="+id,
+            success:function (data) {
+                debugger;
+                if(data.code == "200"){
+                    var json = eval('('+data.data+')');
+                    if("200"!=json.code){
+                        alert(json.msg);
+                    }
+                }else{
+                    alert("设备错误");
+                }
+            }
+        });
+    }
+
+    function newPlater(id) {
+        new EZUIPlayer(id)
+    }
+    // var player = new EZUIPlayer('myPlayer');
+</script>
+</html>
