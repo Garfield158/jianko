@@ -12,11 +12,10 @@
         <result property="state" column="state"/>
         <result property="url" column="url"/>
         <result property="imgUrl" column="imgurl"/>
-        <result property="IOTitle" column="IOTitle"/>
     </resultMap>
 
     <select id="getAllBySchoolId" resultMap="DeviceInfo">
-        select * from deviceinfo where schoolId=#{id}
+        select * from deviceinfo where schoolId=#{arg0} limit #{arg1},#{arg2}
     </select>
 
     <!--<delete id="deleteById" parameterType="java.lang.Integer">-->
@@ -25,12 +24,7 @@
     <select id="getDeviceById" resultMap="DeviceInfo">
         select * from deviceinfo where id=#{id}
     </select>
-
-    <select id="getAllDevice" resultMap="DeviceInfo">
-        select * from deviceinfo
+    <select id="getDevCounts" resultType="java.lang.Integer">
+        select count(*) from deviceinfo where schoolId=#{id}
     </select>
-
-    <update id="updateDevImgUrl" parameterType="com.x.jk.po.entity.DeviceInfo">
-        update  deviceinfo set imgurl = #{arg0} where id=#{arg1}
-    </update>
 </mapper>

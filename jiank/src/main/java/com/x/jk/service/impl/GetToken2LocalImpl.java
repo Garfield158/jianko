@@ -1,12 +1,11 @@
-package com.x.jk.common;
+package com.x.jk.service.impl;
 
 
 import com.alibaba.fastjson.JSONObject;
 import com.x.jk.HttpClientUtil;
-import com.x.jk.mybatis.mapper.DeviceMapper;
 import com.x.jk.mybatis.mapper.TokenMapper;
-import com.x.jk.po.entity.DeviceInfo;
 import com.x.jk.po.entity.Token;
+import com.x.jk.service.GetToken2Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -14,21 +13,13 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 @Component
-public class GetToken2LocalImpl  {
+public class GetToken2LocalImpl implements GetToken2Local {
     @Autowired
     private TokenMapper tokenMapper;
-    @Autowired
-    private DeviceMapper deviceMapper;
-
-
-
-
-
 
     /**定时任务取token*/
     @Scheduled(cron = "0 0 0 * * ?")
@@ -54,33 +45,6 @@ public class GetToken2LocalImpl  {
         String dateEnd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         System.out.println("=====自动任务结束"+dateEnd+"=====");
     }
-
-    @Scheduled(fixedRate = 5000)
-    public void getImgUrlTask() {
-        String url="https://open.ys7.com/api/lapp/device/capture";
-        String token_rs = tokenMapper.getToken().getToken_rs();
-        List<DeviceInfo> deviceInfos= deviceMapper.getAllDevice();
-        for (DeviceInfo dev:deviceInfos) {
-            String devNum = dev.getDevNum();
-            int channleNum = dev.getChannleNum();
-            Map<String,String> pmap=new HashMap<>();
-            pmap.put("accessToken",token_rs);
-            pmap.put("deviceSerial",devNum);
-            pmap.put("channelNo",channleNum+"");
-            String httpsPost = HttpClientUtil.sendHttpsPost(url, pmap);
-            System.out.println(httpsPost);
-            JSONObject jsonObj = JSONObject.parseObject(httpsPost);
-            JSONObject obj = JSONObject.parseObject(jsonObj.get("data").toString());
-            String picUrl = obj.get("picUrl").toString();
-            deviceMapper.updateDevImgUrl(picUrl,dev.getId());
-            try {
-                Thread.sleep(6000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private Token getToken(){
         return tokenMapper.getToken();
     }
