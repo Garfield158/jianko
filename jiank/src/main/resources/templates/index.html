@@ -38,16 +38,15 @@
 <div id="recordingPopup">
 	<div id="popupClose" onclick="closeRecord()">关闭</div>
 	<div class="popup-video">
-		<video id="myvideo"  width="970" height="500" controls="controls"></video>
+		<video src="#" width="970" height="500" controls="controls"></video>
 	</div>
 	<div class="popup-btn">
 		<div class="popup-btn-time">
 			<label>请选择时间段:</label>
-			<input id="mydate" type="date"/>
-            <input id="mytime" type="time">
+			<input type="datetime-local" value="2018-10-6T00:00:00"/>
 		</div>
 		<div class="popup-btn-play">
-			<span id="action" onclick="actionLB()" class="popup-video-play">播放</span>
+			<span class="popup-video-play">播放</span>
 		</div>
 	</div>
 </div>
@@ -108,19 +107,19 @@
 					"<div class='btns btn-mid' onclick='stopDevice("+ids+")'></div>" +
 					"<div class='btns btn-right' onclick='changeDevice("+ids+",3)'></div></div>" +
 					"<div class='btns btn-bottom' onclick='changeDevice("+ids+",1)'></div></div>" +
-					"<div class='recording' onclick='openRecord("+ids+")'><div class='record-btn'>录播</div></div></div></div>";
+					"<div class='recording' onclick='openRecord()'><div class='record-btn'>录播</div></div></div></div>";
                     $("#videoList").html(html);
                 }
                 $("#page").html(pageObj.page);
                 $("#count").html(pageObj.count);
                 if(pageObj.page==1&&pageObj.count==1){
-                    $("#last").removeAttr("onclick");
-                    $("#next").removeAttr("onclick");
+                    $("#last").attr("disabled","true");
+                    $("#next").attr("disabled","true");
 				}else if(pageObj.page==1&&pageObj.page!=pageObj.count){
-                    $("#last").removeAttr("onclick");
+                    $("#last").attr("disabled","true");
                     $("#next").attr("onclick","getDevice(null,'1')");
 				}else if(pageObj.page==pageObj.count&&pageObj.page!=1){
-                    $("#next").removeAttr("onclick");
+                    $("#next").attr("disabled","true");
                     $("#last").attr("onclick","getDevice(null,'-1')");
 				}else{
                     $("#last").attr("onclick","getDevice(null,'-1')");
@@ -160,6 +159,7 @@
             method:"post",
             data:"id="+id,
             success:function (data) {
+                debugger;
                 if(data.code == "200"){
                     var json = eval('('+data.data+')');
                     if("200"!=json.code){
@@ -175,65 +175,17 @@
     function newPlater(id) {
         new EZUIPlayer(id)
     }
-    var devID;
-    function openRecord(id){
-        console.info("id"+id);
+
+    function openRecord(){
         $("#mongolian").show();
         $("#recordingPopup").show();
         $("body").css("overflow","hidden");
-        devID=id;
-        console.info(devID);
-
 	}
-	
-	function actionLB() {
-        var time=$("#mytime").val();
-        var date=$("#mydate").val();
-        console.info(time);
-        console.info(devID);
-        $.ajax({
-            url:"res/media/getByTime",
-            method:"post",
-            data:"id="+devID+"&startDate="+date+"&startTime="+time,
-            success:function (msg) {
-                if(msg.code==200){
-                    console.info(msg.data.size);
-                    var vList = [msg.data.size];
-                    for (var i=0;i<msg.data.size;i++){
-                        vList[i]=msg.data.mediaByTime[i].url;
-					}
-                    var vLen = vList.length;
-                    var curr = 0;
-                    var video = document.getElementById("myvideo");
-                    video.src=vList[0];
-                    video.load();
-                    video.play();
-                    video.addEventListener('ended', function(){play(vList,vLen,curr);});
-                }
-            }
-        })
-    }
-
-    function play(vList,vLen,curr) {
-        curr++;
-        var video = document.getElementById("myvideo");
-        video.src = vList[curr];
-        video.load();
-        video.play();
-        if(curr >= vLen){
-            curr = 0;
-        }
-        video.addEventListener('ended', function(){play(vList,vLen,curr);});
-    }
-
-
 
 	function closeRecord(){
         $("#mongolian").hide();
         $("#recordingPopup").hide();
         $("body").css("overflow","auto");
-        var video = document.getElementById("myvideo");
-        video.src="";
 	}
 
 	function addClick() {
