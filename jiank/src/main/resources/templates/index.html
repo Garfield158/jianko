@@ -84,9 +84,11 @@
                     var ids=data[key].id;
                     var url = data[key].url;
                     var imgUrl=data[key].imgUrl;
+                    var devName = data[key].devName;
                     html+="<div class='monitors text-center'>" +
 					"<video id='"+ids+"v' poster='"+imgUrl+"' controls playsInline webkit-playsinline autoplay  width='320' height='240' controls='controls'>" +
 					"<source src='"+url+"'></video>" +
+					"<p class=\"video-span\">"+devName+"</p>" +
 					"<div class='video-btn'>" +
 					"<div class='direction-btn'>" +
 					"<div class='btns btn-top' onclick='changeDevice("+ids+",0)'></div>" +
