@@ -67,7 +67,7 @@
                         if (key%3==0){
                             html+="<div class='mt left'><video id='"+ids+"v' poster='"+imgUrl+"' controls playsInline webkit-playsinline autoplay>" +
                                 "<source src='"+url+"'></video>" +
-                                " <div id=\"toolArea\">\n" +
+                                " <div id='"+ids+"toolArea'>\n" +
                                 "        <input  type='button' value='上' onclick='changeDevice("+ids+",0);'/>\n" +
                                 "        <input  type='button' value='下' onclick='changeDevice("+ids+",1);'/>\n" +
                                 "        <input  type='button' value='停止' onclick='stopDevice("+ids+");'/>\n" +
@@ -78,7 +78,7 @@
                         }else if (key%3==1) {
                             html+="<div class='center mt'><video id='"+ids+"v' poster='"+imgUrl+"' controls playsInline webkit-playsinline autoplay>" +
                                 "<source src='"+url+"'> </video>" +
-                                "<div id=\"toolArea\">\n" +
+                                "<div id='"+ids+"toolArea'>\n" +
                                 "        <input  type=\"button\" value=\"上\" onclick='changeDevice("+ids+",0);'/>\n" +
                                 "        <input  type=\"button\" value=\"下\" onclick='changeDevice("+ids+",1);'/>\n" +
                                 "        <input  type='button' value='停止' onclick='stopDevice("+ids+");'/>\n" +
@@ -88,7 +88,7 @@
                         }else {
                             html+="<div class='right mt'><video id='"+ids+"v' poster='"+imgUrl+"' controls playsInline webkit-playsinline autoplay>" +
                                 "<source src='"+url+"'></video> " +
-                                "<div id=\"toolArea\">\n" +
+                                "<div id='"+ids+"toolArea'>\n" +
                                 "        <input  type=\"button\" value=\"上\" onclick='changeDevice("+ids+",0);'/>\n" +
                                 "        <input  type=\"button\" value=\"下\" onclick='changeDevice("+ids+",1);'/>\n" +
                                 "        <input  type='button' value='停止' onclick='stopDevice("+ids+");'/>\n" +
