@@ -8,6 +8,8 @@
 	<link href="css/main.css" rel="stylesheet">
 	<script src="js/jquery.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="https://open.ys7.com/sdk/js/1.4/ezuikit.js"></script>
+	<script src="https://open.ys7.com/sdk/js/1.3/ezuikit.js"></script>
 </head>
 <body>
 <header class="index-header">
@@ -15,122 +17,13 @@
 </header>
 <div class="main-content">
 	<div class="menu-left text-center">
-		<select class="select-school">
-			<option>学校列表1</option>
-			<option>学校列表2</option>
-			<option>学校列表3</option>
+		<select class="select-school" id="schoolList" onchange="getDevice(this)" >
+			<option value="0">请选择学校</option>
 		</select>
 	</div>
 	<div class="main-box">
-		<div class="monitor-div text-center">
-			<div class="monitors text-center">
-				<video src="#" width="320" height="240" controls="controls"></video>
-				<p class="video-span">1</p>
-				<div class="video-btn">
-					<div class="direction-btn">
-						<div class="btns btn-top"></div>
-						<div class="btn-mid-box">
-							<div class="btns btn-left"></div>
-							<div class="btns btn-mid"></div>
-							<div class="btns btn-right"></div>
-						</div>
-						<div class="btns btn-bottom"></div>
-					</div>
-					<div class="recording">
-						<div class="record-btn">录播</div>
-					</div>
-				</div>
-			</div>
-			<div class="monitors text-center">
-				<video src="#" width="320" height="240" controls="controls"></video>
-				<p class="video-span">2</p>
-				<div class="video-btn">
-					<div class="direction-btn">
-						<div class="btns btn-top"></div>
-						<div class="btn-mid-box">
-							<div class="btns btn-left"></div>
-							<div class="btns btn-mid"></div>
-							<div class="btns btn-right"></div>
-						</div>
-						<div class="btns btn-bottom"></div>
-					</div>
-					<div class="recording">
-						<div class="record-btn">录播</div>
-					</div>
-				</div>
-			</div>
-			<div class="monitors text-center">
-				<video src="#" width="320" height="240" controls="controls"></video>
-				<p class="video-span">3</p>
-				<div class="video-btn">
-					<div class="direction-btn">
-						<div class="btns btn-top"></div>
-						<div class="btn-mid-box">
-							<div class="btns btn-left"></div>
-							<div class="btns btn-mid"></div>
-							<div class="btns btn-right"></div>
-						</div>
-						<div class="btns btn-bottom"></div>
-					</div>
-					<div class="recording">
-						<div class="record-btn">录播</div>
-					</div>
-				</div>
-			</div>
-			<div class="monitors text-center">
-				<video src="#" width="320" height="240" controls="controls"></video>
-				<p class="video-span">4</p>
-				<div class="video-btn">
-					<div class="direction-btn">
-						<div class="btns btn-top"></div>
-						<div class="btn-mid-box">
-							<div class="btns btn-left"></div>
-							<div class="btns btn-mid"></div>
-							<div class="btns btn-right"></div>
-						</div>
-						<div class="btns btn-bottom"></div>
-					</div>
-					<div class="recording">
-						<div class="record-btn">录播</div>
-					</div>
-				</div>
-			</div>
-			<div class="monitors text-center">
-				<video src="#" width="320" height="240" controls="controls"></video>
-				<p class="video-span">5</p>
-				<div class="video-btn">
-					<div class="direction-btn">
-						<div class="btns btn-top"></div>
-						<div class="btn-mid-box">
-							<div class="btns btn-left"></div>
-							<div class="btns btn-mid"></div>
-							<div class="btns btn-right"></div>
-						</div>
-						<div class="btns btn-bottom"></div>
-					</div>
-					<div class="recording">
-						<div class="record-btn">录播</div>
-					</div>
-				</div>
-			</div>
-			<div class="monitors text-center">
-				<video src="#" width="320" height="240" controls="controls"></video>
-				<p class="video-span">6</p>
-				<div class="video-btn">
-					<div class="direction-btn">
-						<div class="btns btn-top"></div>
-						<div class="btn-mid-box">
-							<div class="btns btn-left"></div>
-							<div class="btns btn-mid"></div>
-							<div class="btns btn-right"></div>
-						</div>
-						<div class="btns btn-bottom"></div>
-					</div>
-					<div class="recording">
-						<div class="record-btn">录播</div>
-					</div>
-				</div>
-			</div>
+		<div class="monitor-div text-center" id="videoList">
+
 		</div>
 		<div class="pagination text-center">
 			<ul class="pager text-center">
@@ -157,4 +50,101 @@
 	</div>
 </div>
 </body>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url:"res/School/getAll",
+            method:"post",
+            success:function (data) {
+                var da=data.data;
+                var schoolList=$("#schoolList");
+                for (var key in da) {
+                    var val=da[key].schoolName;
+                    var id=da[key].id;
+                    schoolList.append("<option value="+id+">"+val+"</option>");
+                }
+            }
+        })
+    });
+    function getDevice(obj) {
+        var id = $(obj).val();
+        if(id==0){
+            $("#videoList").html("");
+            return;
+		}
+        $.ajax({
+            url:"res/dev/getDev",
+            method:"post",
+            data:"id="+id,
+            success:function (msg) {
+                var data=msg.data;
+                var html="";
+                $("#videoList").html(html);
+                for (var key in data) {
+                    var ids=data[key].id;
+                    var url = data[key].url;
+                    var imgUrl=data[key].imgUrl;
+                    html+="<div class='monitors text-center'>" +
+					"<video id='"+ids+"v' poster='"+imgUrl+"' controls playsInline webkit-playsinline autoplay  width='320' height='240' controls='controls'>" +
+					"<source src='"+url+"'></video>" +
+					"<div class='video-btn'>" +
+					"<div class='direction-btn'>" +
+					"<div class='btns btn-top' onclick='changeDevice("+ids+",0)'></div>" +
+					"<div class='btn-mid-box'><div class='btns btn-left' onclick='changeDevice("+ids+",2)'></div>" +
+					"<div class='btns btn-mid' onclick='stopDevice("+ids+")'></div>" +
+					"<div class='btns btn-right' onclick='changeDevice("+ids+",3)'></div></div>" +
+					"<div class='btns btn-bottom' onclick='changeDevice("+ids+",1)'></div></div>" +
+					"<div class='recording'><div class='record-btn'>录播</div></div></div></div>";
+                    $("#videoList").html(html);
+                }
+                for (var key in data) {
+                    var ids=data[key].id;
+                    var str=ids+"v";
+                    newPlater(str);
+                }
+            }
+        });
+    }
+
+    function changeDevice(id,direction){
+        $.ajax({
+            url:"res/dev/controlOne",
+            method:"post",
+            data:"id="+id+"&direction="+direction,
+            success:function (data) {
+                debugger;
+                if(data.code == "200"){
+                    var json = eval('('+data.data+')');
+                    if("200"!=json.code){
+                        alert(json.msg);
+                    }
+                }else{
+                    alert("设备错误");
+                }
+            }
+        });
+    }
+    function stopDevice(id){
+        $.ajax({
+            url:"res/dev/stopDevice",
+            method:"post",
+            data:"id="+id,
+            success:function (data) {
+                debugger;
+                if(data.code == "200"){
+                    var json = eval('('+data.data+')');
+                    if("200"!=json.code){
+                        alert(json.msg);
+                    }
+                }else{
+                    alert("设备错误");
+                }
+            }
+        });
+    }
+
+    function newPlater(id) {
+        new EZUIPlayer(id)
+    }
+</script>
 </html>
