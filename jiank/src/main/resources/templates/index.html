@@ -113,17 +113,17 @@
                 $("#page").html(pageObj.page);
                 $("#count").html(pageObj.count);
                 if(pageObj.page==1&&pageObj.count==1){
-                    $("#last").attr("disabled","true");
-                    $("#next").attr("disabled","true");
+                    $("#last").removeAttr("onclick");
+                    $("#next").removeAttr("onclick");
 				}else if(pageObj.page==1&&pageObj.page!=pageObj.count){
-                    $("#last").attr("disabled","true");
-                    $("#next").removeAttr("disabled");
+                    $("#last").removeAttr("onclick");
+                    $("#next").attr("onclick","getDevice(null,'1')");
 				}else if(pageObj.page==pageObj.count&&pageObj.page!=1){
-                    $("#next").attr("disabled","true");
-                    $("#last").removeAttr("disabled");
+                    $("#next").removeAttr("onclick");
+                    $("#last").attr("onclick","getDevice(null,'-1')");
 				}else{
-                    $("#last").removeAttr("disabled");
-                    $("#next").removeAttr("disabled");
+                    $("#last").attr("onclick","getDevice(null,'-1')");
+                    $("#next").attr("onclick","getDevice(null,'1')");
 				}
                 for (var key in data) {
                     var ids=data[key].id;
