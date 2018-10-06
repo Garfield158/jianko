@@ -9,16 +9,6 @@ public class DeviceInfo {
     private int state;
     private String url;
     private String imgUrl;
-    private String IOTitle;
-
-
-    public String getIOTitle() {
-        return IOTitle;
-    }
-
-    public void setIOTitle(String IOTitle) {
-        this.IOTitle = IOTitle;
-    }
 
     public String getImgUrl() {
         return imgUrl;
