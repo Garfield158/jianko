@@ -35,7 +35,7 @@
 </div>
 <div id="mongolian"></div>
 <div id="recordingPopup">
-	<div id="popupClose" onclick="closeRecord()">关闭</div>
+	<div id="popupClose">关闭</div>
 	<div class="popup-video">
 		<video src="#" width="970" height="500" controls="controls"></video>
 	</div>
@@ -96,7 +96,7 @@
 					"<div class='btns btn-mid' onclick='stopDevice("+ids+")'></div>" +
 					"<div class='btns btn-right' onclick='changeDevice("+ids+",3)'></div></div>" +
 					"<div class='btns btn-bottom' onclick='changeDevice("+ids+",1)'></div></div>" +
-					"<div class='recording' onclick='openRecord()'><div class='record-btn'>录播</div></div></div></div>";
+					"<div class='recording'><div class='record-btn'>录播</div></div></div></div>";
                     $("#videoList").html(html);
                 }
                 for (var key in data) {
@@ -104,7 +104,6 @@
                     var str=ids+"v";
                     newPlater(str);
                 }
-                addClick();
             }
         });
     }
@@ -149,32 +148,5 @@
     function newPlater(id) {
         new EZUIPlayer(id)
     }
-
-    function openRecord(){
-        $("#mongolian").show();
-        $("#recordingPopup").show();
-        $("body").css("overflow","hidden");
-	}
-
-	function closeRecord(){
-        $("#mongolian").hide();
-        $("#recordingPopup").hide();
-        $("body").css("overflow","auto");
-	}
-
-	function addClick() {
-        /*控制按钮*/
-        let $monitors = $(".main-box .monitors");
-        for(let i = 0; i < $monitors.length; i++){
-            $monitors.eq(i).hover(function(){
-                $(this).find('.video-span').hide();
-                $(this).find('.video-btn').show();
-            },function(){
-                $(this).find('.video-span').show();
-                $(this).find('.video-btn').hide();
-            })
-        }
-    }
-
 </script>
 </html>
