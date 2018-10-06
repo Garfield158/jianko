@@ -9,11 +9,9 @@ import java.util.List;
 @Repository
 @Mapper
 public interface DeviceMapper {
-    List<DeviceInfo> getAllBySchoolId(int id);
+    List<DeviceInfo> getAllBySchoolId(int id,int first,int last);
 
     DeviceInfo getDeviceById(Integer id);
 
-    List<DeviceInfo> getAllDevice();
-
-    void updateDevImgUrl(String picUrl,int id);
+    Integer getDevCounts(Integer id);
 }
