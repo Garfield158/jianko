@@ -62,14 +62,14 @@
 .monitor-div .monitors{
 	float: left;
 	width: 33.33%;
-	height: 350px;
+	height: 300px;
 }
 .video-span{
 	margin:10px 0;
 	height: 16px;
 	line-height: 16px;
 	font-size: 14px;
-	display: block;
+	display: none;
 }
 /*上下左右录播按钮*/
 .video-btn{
