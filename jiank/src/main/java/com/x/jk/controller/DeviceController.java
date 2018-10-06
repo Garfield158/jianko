@@ -3,7 +3,6 @@ package com.x.jk.controller;
 import com.x.jk.HttpClientUtil;
 import com.x.jk.common.Result;
 import com.x.jk.po.entity.DeviceInfo;
-import com.x.jk.po.entity.Page;
 import com.x.jk.po.entity.Token;
 import com.x.jk.service.DeviceService;
 import com.x.jk.service.TokenService;
@@ -22,19 +21,15 @@ public class DeviceController {
     @Autowired
     DeviceService deviceService;
     @RequestMapping("res/dev/getDev")
-    public Result getDeviceBySchoolId(Integer id,Integer page){
-        Page pageObj = new Page();
-        pageObj.setPage(page);
-        List<DeviceInfo> deviceInfos=deviceService.getDevBySchoolId(id,pageObj);
-        int k = deviceService.getDevCounts(id)%Page.size;
-        int count;
-        if(k==0){
-            count = deviceService.getDevCounts(id)/Page.size;
-        }else{
-            count = deviceService.getDevCounts(id)/Page.size+1;
+    public Result getDeviceBySchoolId(Integer id,Integer page,Integer size){
+        if (page==null){
+            page=1;
         }
-        pageObj.setCount(count);
-        return Result.bulid(deviceInfos,pageObj);
+        if (size==null){
+            size=9;
+        }
+        List<DeviceInfo> deviceInfos=deviceService.getDevBySchoolId(id,page,size);
+        return Result.bulid(deviceInfos);
     }
 
     @RequestMapping("res/dev/controlOne")

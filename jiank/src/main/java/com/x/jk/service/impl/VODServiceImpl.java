@@ -20,7 +20,7 @@ public class VODServiceImpl implements VODService {
     public List<MediaRes> getMediaByTime(Date startTime, Date endTime, DeviceInfo device) {
         VodClient vodClient = VodClientIns.VodClientInstent();
         if (device.getIOTitle()==null){
-            device.setIOTitle("");
+            device.setIOTitle("无");
         }
         ListMediaResourceResponse responce = vodClient.listMediaResources(1, 999, "PUBLISHED", startTime, endTime, device.getIOTitle());
         System.out.println(responce.getMedia().size());

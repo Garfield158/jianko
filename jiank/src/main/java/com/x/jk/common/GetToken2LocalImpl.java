@@ -14,13 +14,21 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 @Component
-public class GetToken2LocalImpl implements GetToken2Local {
+public class GetToken2LocalImpl  {
     @Autowired
     private TokenMapper tokenMapper;
+    @Autowired
+    private DeviceMapper deviceMapper;
+
+
+
+
+
 
     /**定时任务取token*/
     @Scheduled(cron = "0 0 0 * * ?")
