@@ -27,9 +27,8 @@
 		</div>
 		<div class="pagination text-center">
 			<ul class="pager text-center">
-		    	<li ><label id="last" onclick="getDevice(null,'-1')"><<</label></li>
-				<li><a id="page" href="javascript:void(0);"></a>/<a id="count" href="javascript:void(0);"></a></li>
-		    	<li ><label id="next" onclick="getDevice(null,'1')">>></label></li>
+		    	<li><a href="javascript:void(0);">上一页</a></li>
+		    	<li><a href="javascript:void(0);">下一页</a></li>
 		  	</ul>
 		</div>
 	</div>
@@ -68,17 +67,8 @@
             }
         })
     });
-    function getDevice(obj,k) {
+    function getDevice(obj) {
         var id = $(obj).val();
-        var page =1;
-        if(id==null||id==undefined){
-            id = $("#schoolList").val();
-            if(k=="-1"){
-                page =  parseInt($("#page").html())-1;
-			}else{
-                page =  parseInt($("#page").html())+1;
-            }
-		}
         if(id==0){
             $("#videoList").html("");
             return;
@@ -86,10 +76,9 @@
         $.ajax({
             url:"res/dev/getDev",
             method:"post",
-            data:"id="+id+"&page="+page,
+            data:"id="+id,
             success:function (msg) {
                 var data=msg.data;
-                var pageObj =msg.page;
                 var html="";
                 $("#videoList").html(html);
                 for (var key in data) {
@@ -111,21 +100,6 @@
 					"<div class='recording' onclick='openRecord("+ids+")'><div class='record-btn'>录播</div></div></div></div>";
                     $("#videoList").html(html);
                 }
-                $("#page").html(pageObj.page);
-                $("#count").html(pageObj.count);
-                if(pageObj.page==1&&pageObj.count==1){
-                    $("#last").attr("disabled","true");
-                    $("#next").attr("disabled","true");
-				}else if(pageObj.page==1&&pageObj.page!=pageObj.count){
-                    $("#last").attr("disabled","true");
-                    $("#next").removeAttr("disabled");
-				}else if(pageObj.page==pageObj.count&&pageObj.page!=1){
-                    $("#next").attr("disabled","true");
-                    $("#last").removeAttr("disabled");
-				}else{
-                    $("#last").removeAttr("disabled");
-                    $("#next").removeAttr("disabled");
-				}
                 for (var key in data) {
                     var ids=data[key].id;
                     var str=ids+"v";

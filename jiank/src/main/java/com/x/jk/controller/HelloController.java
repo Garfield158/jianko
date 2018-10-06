@@ -1,5 +1,6 @@
 package com.x.jk.controller;
 
+import com.baidubce.services.vod.VodClient;
 import com.x.jk.common.Result;
 import com.x.jk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
