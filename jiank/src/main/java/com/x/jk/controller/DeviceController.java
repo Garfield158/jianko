@@ -26,7 +26,7 @@ public class DeviceController {
             page=1;
         }
         if (size==null){
-            size=10;
+            size=9;
         }
         List<DeviceInfo> deviceInfos=deviceService.getDevBySchoolId(id,page,size);
         return Result.bulid(deviceInfos);
